@@ -208,6 +208,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ARStickersMod
 
+# OOS Camera
+PRODUCT_PACKAGES += \
+    OnePlusCamera \
+    OnePlusCameraService \
+    OnePlusGallery
+
 # power
 PRODUCT_PACKAGES += \
     power.oneplus6
