@@ -37,7 +37,7 @@
   <string name="slider_mode_silent">Без звука</string>
   <string name="slider_mode_priority">Только важные</string>
   <string name="slider_mode_alarm">Только будильники</string>
-  <string name="slider_mode_dnd">Полная тишина</string>
+  <string name="slider_mode_zen">Не беспокоить</string>
   <string name="slider_mode_title_top">Верхнее положение</string>
   <string name="slider_mode_title_center">Среднее положение</string>
   <string name="slider_mode_title_bottom">Нижнее положение</string>
@@ -58,6 +58,13 @@
   <string name="music_play_entry">Воспр. или остановка музыки</string>
   <string name="music_prev_entry">Предыдущий трек</string>
   <string name="music_next_entry">Следующий трек</string>
+  <string name="volume_up">Увеличить громкость</string>
+  <string name="volume_down">Уменьшить громкость</string>
+  <string name="browse_scroll_up">Прокрутка вверх</string>
+  <string name="browse_scroll_down">Прокрутка вниз</string>
+  <string name="navigate_back">Назад</string>
+  <string name="navigate_home">Домой</string>
+  <string name="navigate_recent">Недавние</string>
   <string name="not_ready_summary">Получение разрешения...</string>
   <string name="resolve_failed_summary">Ошибка получения разрешения приложения</string>
   <string name="category_down_swipe_gesture">Провести вниз</string>
