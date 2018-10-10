@@ -210,10 +210,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ims-ext-common
 
-# Camera
-PRODUCT_PACKAGES += \
-    SnapdragonCamera2
-
 PRODUCT_PACKAGES += \
     com.android.ims.rcsmanager \
     com.android.ims.rcsmanager.xml \
