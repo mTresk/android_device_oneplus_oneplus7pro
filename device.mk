@@ -189,11 +189,9 @@ PRODUCT_PACKAGES += \
     libcld80211 \
     lib_driver_cmd_qcwcn
 
-# OOS Camera
+# Google Camera
 PRODUCT_PACKAGES += \
-    OnePlusCamera \
-    OnePlusCameraService \
-    OnePlusGallery
+    GoogleCameraMod
 
 # power
 PRODUCT_PACKAGES += \
