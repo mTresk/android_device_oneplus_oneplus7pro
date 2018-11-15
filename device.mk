@@ -35,6 +35,7 @@ TARGET_GAPPS_ARCH := arm64
 TARGET_BOOT_ANIMATION_RES := 1080
 IS_PHONE := true
 TARGET_MINIMAL_APPS := false
+TARGET_INCLUDE_STOCK_ARCORE := true
 
 # SP-NDK:
 PRODUCT_PACKAGES += \
@@ -192,6 +193,10 @@ PRODUCT_PACKAGES += \
 # Google Camera
 PRODUCT_PACKAGES += \
     GoogleCameraMod
+
+# ARStickers
+PRODUCT_PACKAGES += \
+    ARStickersMod
 
 # power
 PRODUCT_PACKAGES += \
