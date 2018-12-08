@@ -210,9 +210,7 @@ PRODUCT_PACKAGES += \
 
 # OOS Camera
 PRODUCT_PACKAGES += \
-    OnePlusCamera \
-    OnePlusCameraService \
-    OnePlusGallery
+    OnePlusCameraService
 
 # power
 PRODUCT_PACKAGES += \
