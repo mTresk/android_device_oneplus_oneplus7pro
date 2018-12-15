@@ -10,6 +10,13 @@ on init
     mount none /system/lib64/hw/power.oneplus6.so /vendor/lib64/hw/power.qcom.so bind
     mount none /dev/null /vendor/etc/init/android.hardware.health@2.0-service.rc bind
 
+# Kernel
+    write /dev/stune/schedtune.colocate 0
+    write /dev/stune/background/schedtune.colocate 0
+    write /dev/stune/system-background/schedtune.colocate 0
+    write /dev/stune/foreground/schedtune.colocate 0
+    write /dev/stune/top-app/schedtune.colocate 0
+
 on boot
     # default country code
     setprop ro.boot.wificountrycode 00
@@ -154,3 +161,9 @@ service dashd /sbin/dashd
 
 service factory-hal-1-0 /system/bin/true
     disabled
+
+on property:sys.post_boot.parsed=1
+    setprop vendor.post_boot.parsed 1
+
+on property:vendor.post_boot.parsed=1
+    exec u:r:magisk:s0 root root -- /init.redflare.sh

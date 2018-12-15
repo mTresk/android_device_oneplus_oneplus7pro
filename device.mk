@@ -216,6 +216,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     power.oneplus6
 
+# Kernel script
+PRODUCT_PACKAGES += \
+    init.redflare.sh
+
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService
