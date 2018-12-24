@@ -32,4 +32,7 @@
 
     <!-- The CPUs to display in CPUInfoService view -->
     <string name="config_displayCpus" translatable="false">0,4</string>
+
+    <!-- Allow devices override audio panel location to the left side -->
+	<bool name="config_audioPanelOnLeftSide">true</bool>
 </resources>
