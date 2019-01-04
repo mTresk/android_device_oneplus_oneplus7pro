@@ -33,13 +33,14 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "utils.h"
 #include "list.h"
 #include "hint-data.h"
 #include "power-common.h"
 
-#define LOG_TAG "QCOM PowerHAL"
+#define LOG_TAG "QTI PowerHAL"
 #include <utils/Log.h>
 
 char scaling_gov_path[4][80] ={
@@ -260,6 +261,21 @@ int perf_hint_enable(int hint_id , int duration)
     return lock_handle;
 }
 
+//Same as perf_hint_enable, but with the ability to
+//choose the type
+int perf_hint_enable_with_type(int hint_id, int duration, int type)
+{
+    int lock_handle = 0;
+
+    if (qcopt_handle) {
+        if (perf_hint) {
+            lock_handle = perf_hint(hint_id, NULL, duration, type);
+            if (lock_handle == -1)
+                ALOGE("Failed to acquire lock.");
+        }
+    }
+    return lock_handle;
+}
 
 void release_request(int lock_handle) {
     if (qcopt_handle && perf_lock_rel)

@@ -33,7 +33,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 TARGET_BOOTANIMATION_SIZE := 1080p
 AB_OTA_UPDATER := true
 
-DEVICE_PACKAGE_OVERLAYS += device/oneplus/oneplus6/overlay
+DEVICE_PACKAGE_OVERLAYS += device/oneplus/oneplus6/overlay/common
+DEVICE_PACKAGE_OVERLAYS += device/oneplus/oneplus6/overlay/device
 DEVICE_PACKAGE_OVERLAYS += vendor/omni/overlay/CarrierConfig
 
 # Inherit from our custom product configuration
@@ -57,10 +58,10 @@ PRODUCT_MODEL := ONEPLUS A6003
 PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=OnePlus6 PRODUCT_NAME=OnePlus6
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BUILD_FINGERPRINT=OnePlus/OnePlus6/OnePlus6:9/PKQ1.180716.001/1810252315:user/release-keys \
-    PRIVATE_BUILD_DESC="OnePlus6-user 9 PKQ1.180716.001 1810252315 release-keys"
+    BUILD_FINGERPRINT=OnePlus/OnePlus6/OnePlus6:9/PKQ1.180716.001/1812250000:user/release-keys \
+    PRIVATE_BUILD_DESC="OnePlus6-user 9 PKQ1.180716.001 1812250000 release-keys"
 
-PLATFORM_SECURITY_PATCH_OVERRIDE := 2018-11-01
+PLATFORM_SECURITY_PATCH_OVERRIDE := 2018-12-01
 
 TARGET_VENDOR := oneplus
 
