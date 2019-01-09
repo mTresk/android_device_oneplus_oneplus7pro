@@ -8,19 +8,21 @@ sleep 25;
     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     echo 500 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
     echo 20000 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
+    echo 1 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/iowait_boost_enable
     echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
     echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
 
     echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor    
     echo 500 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/up_rate_limit_us
     echo 20000 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/down_rate_limit_us
+    echo 1 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/iowait_boost_enable
     echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
     echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
 
 # Input boost and stune configuration
     echo "0:1516800 1:0 2:0 3:0 4:0 5:0 6:0 7:0" > /sys/module/cpu_boost/parameters/input_boost_freq
     echo 600 > /sys/module/cpu_boost/parameters/input_boost_ms
-    echo 15 > /sys/module/cpu_boost/parameters/dynamic_stune_boost
+    echo 20 > /sys/module/cpu_boost/parameters/dynamic_stune_boost
 
 # Disable Boost_No_Override
     echo 0 > /dev/stune/foreground/schedtune.sched_boost_no_override
@@ -30,6 +32,7 @@ sleep 25;
     echo 1 > /dev/stune/foreground/schedtune.prefer_idle
     echo 1 > /dev/stune/top-app/schedtune.boost
     echo 1 > /dev/stune/top-app/schedtune.prefer_idle
+    echo 10 > /dev/stune/top-app/schedtune.sched_boost
 
 # Enable PEWQ
     echo Y > /sys/module/workqueue/parameters/power_efficient
