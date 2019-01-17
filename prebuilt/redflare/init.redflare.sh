@@ -21,8 +21,8 @@ sleep 25;
 
 # Input boost and stune configuration
     echo "0:1516800 1:0 2:0 3:0 4:0 5:0 6:0 7:0" > /sys/module/cpu_boost/parameters/input_boost_freq
-    echo 600 > /sys/module/cpu_boost/parameters/input_boost_ms
-    echo 20 > /sys/module/cpu_boost/parameters/dynamic_stune_boost
+    echo 500 > /sys/module/cpu_boost/parameters/input_boost_ms
+    echo 15 > /sys/module/cpu_boost/parameters/dynamic_stune_boost
 
 # Disable Boost_No_Override
     echo 0 > /dev/stune/foreground/schedtune.sched_boost_no_override
@@ -30,9 +30,8 @@ sleep 25;
 
 # Set default schedTune value for foreground/top-app
     echo 1 > /dev/stune/foreground/schedtune.prefer_idle
-    echo 1 > /dev/stune/top-app/schedtune.boost
+    echo 5 > /dev/stune/top-app/schedtune.boost
     echo 1 > /dev/stune/top-app/schedtune.prefer_idle
-    echo 10 > /dev/stune/top-app/schedtune.sched_boost
 
 # Enable PEWQ
     echo Y > /sys/module/workqueue/parameters/power_efficient
@@ -40,15 +39,8 @@ sleep 25;
 # Disable Touchboost
     echo 0 > /sys/module/msm_performance/parameters/touchboost
 
-# Adjust SCHED Features
-    echo NO_EAS_USE_NEED_IDLE > /sys/kernel/debug/sched_features
-    echo TTWU_QUEUE > /sys/kernel/debug/sched_features
-
 # Disable CAF task placement for Big Cores
     echo 0 > /proc/sys/kernel/sched_walt_rotate_big_tasks
-
-# Disable Autogrouping
-    echo 0 > /proc/sys/kernel/sched_autogroup_enabled
 
 # Setup EAS cpusets values for better load balancing
     echo 0-7 > /dev/cpuset/top-app/cpus
@@ -63,3 +55,14 @@ sleep 25;
 # Adjust Read Ahead
     echo 128 > /sys/block/sda/queue/read_ahead_kb
     echo 128 > /sys/block/dm-0/queue/read_ahead_kb
+
+# Tune Core_CTL for proper task placement
+    echo "0 0 0 0" > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
+    echo "0 0 0 0" > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
+    echo 1 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
+    echo 4294967295 > /sys/devices/system/cpu/cpu0/core_ctl/task_thres
+
+    echo "0 0 0 0" > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres
+    echo "0 0 0 0" > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres
+    echo 1 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
+    echo 4294967295 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres
