@@ -292,6 +292,10 @@ DEVICE_FRAMEWORK_MANIFEST_FILE += \
 PRODUCT_PACKAGES += \
     OmniDisplayManager
 
+# Hede notch
+PRODUCT_PACKAGES += \
+    NoCutoutOverlay
+
 # Temporary handling
 #
 # Include config.fs get only if legacy device/qcom/<target>/android_filesystem_config.h
