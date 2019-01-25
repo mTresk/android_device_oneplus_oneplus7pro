@@ -1,6 +1,6 @@
 #!/system/bin/sh 
 
-sleep 25;
+sleep 35;
 
 # Applying RedFlare settings 
 
@@ -20,9 +20,12 @@ sleep 25;
     echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
 
 # Input boost and stune configuration
-    echo "0:1516800 1:0 2:0 3:0 4:0 5:0 6:0 7:0" > /sys/module/cpu_boost/parameters/input_boost_freq
-    echo 500 > /sys/module/cpu_boost/parameters/input_boost_ms
+    echo "0:1324800 1:0 2:0 3:0 4:0 5:0 6:0 7:0" > /sys/module/cpu_boost/parameters/input_boost_freq
+    echo 1500 > /sys/module/cpu_boost/parameters/input_boost_ms
     echo 15 > /sys/module/cpu_boost/parameters/dynamic_stune_boost
+
+# Dynamic Stune Boost during sched_boost
+    echo 15 > /dev/stune/top-app/schedtune.sched_boost
 
 # Disable Boost_No_Override
     echo 0 > /dev/stune/foreground/schedtune.sched_boost_no_override
@@ -30,7 +33,7 @@ sleep 25;
 
 # Set default schedTune value for foreground/top-app
     echo 1 > /dev/stune/foreground/schedtune.prefer_idle
-    echo 5 > /dev/stune/top-app/schedtune.boost
+    echo 0 > /dev/stune/top-app/schedtune.boost
     echo 1 > /dev/stune/top-app/schedtune.prefer_idle
 
 # Enable PEWQ
