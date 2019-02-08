@@ -162,7 +162,6 @@ TARGET_CAMERA_NEEDS_CLIENT_INFO := true
 USE_CAMERA_STUB := true
 TARGET_USES_MEDIA_EXTENSIONS := false
 BOARD_USES_SNAPDRAGONCAMERA_VERSION := 2
-TARGET_CAMERA_BOOTTIME_TIMESTAMP := true
 
 # Disable secure discard because it's SLOW
 BOARD_SUPPRESS_SECURE_ERASE := true
@@ -243,11 +242,16 @@ endif
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 
 # selinux
-include device/qcom/sepolicy/sepolicy.mk
+#include device/qcom/sepolicy/sepolicy.mk
 include vendor/omni/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(BOARD_PATH)/sepolicy/qcom
 BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(BOARD_PATH)/sepolicy/public
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(BOARD_PATH)/sepolicy/private
+BOARD_PLAT_PUBLIC_SEPOLICY_DIR += \
+    device/qcom/sepolicy/public
+BOARD_PLAT_PRIVATE_SEPOLICY_DIR += \
+    device/qcom/sepolicy/private
+
 
 BOARD_SECCOMP_POLICY += $(BOARD_PATH)/seccomp_policy
 
