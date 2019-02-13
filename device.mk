@@ -202,7 +202,7 @@ PRODUCT_PACKAGES += \
 
 # Google Camera
 PRODUCT_PACKAGES += \
-    GoogleCameraModOP5
+    GoogleCameraModOP6
 
 # ARStickers
 PRODUCT_PACKAGES += \
