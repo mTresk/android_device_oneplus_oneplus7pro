@@ -218,7 +218,7 @@ PRODUCT_PACKAGES += \
 
 # Kernel script
 PRODUCT_PACKAGES += \
-    init.redflare.sh
+    init.redflare.rc
 
 # ANT+
 PRODUCT_PACKAGES += \

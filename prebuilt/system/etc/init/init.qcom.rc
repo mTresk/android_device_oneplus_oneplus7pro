@@ -1,3 +1,5 @@
+import /init.redflare.rc
+
 on init
     mount none /system/etc/media_profiles_vendor.xml /vendor/etc/media_profiles_vendor.xml bind
     mount none /system/etc/audio_policy_configuration_omni.xml /vendor/etc/audio/audio_policy_configuration.xml bind
@@ -11,13 +13,6 @@ on init
     mount none /dev/null /vendor/etc/init/android.hardware.health@2.0-service.rc bind
     mount none /system/lib64/hw/hwcomposer.sdm845.so /vendor/lib64/hw/hwcomposer.sdm845.so bind
     mount none /system/lib/hw/hwcomposer.sdm845.so /vendor/lib/hw/hwcomposer.sdm845.so bind
-
-# Kernel
-    write /dev/stune/schedtune.colocate 0
-    write /dev/stune/background/schedtune.colocate 0
-    write /dev/stune/system-background/schedtune.colocate 0
-    write /dev/stune/foreground/schedtune.colocate 0
-    write /dev/stune/top-app/schedtune.colocate 0
 
 on boot
     # default country code
@@ -163,9 +158,3 @@ service dashd /sbin/dashd
 
 service factory-hal-1-0 /system/bin/true
     disabled
-
-on property:sys.post_boot.parsed=1
-    setprop vendor.post_boot.parsed 1
-
-on property:vendor.post_boot.parsed=1
-    exec u:r:magisk:s0 root root -- /init.redflare.sh
