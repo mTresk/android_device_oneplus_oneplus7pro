@@ -30,6 +30,8 @@
   <string name="graphics_title">Оформление</string>
   <string name="srgb_mode_title">Режим sRGB</string>
   <string name="hbm_mode_title">Режим повышенной яркости</string>
+  <string name="adaptive_mode_title">Адаптивный режим</string>
+  <string name="oneplus_mode_title">Режим OnePlus</string>
   <string name="proxi_summary_head">Проверить датчики жестов и отпечатков пальцев</string>
   <string name="proxi_title_head">Проверка датчика приближения</string>
   <string name="slider_mode_off">Выкл.</string>
