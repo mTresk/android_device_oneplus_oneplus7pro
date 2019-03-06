@@ -216,10 +216,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     power.oneplus6
 
-# Kernel script
-PRODUCT_PACKAGES += \
-    init.redflare.rc
-
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService
@@ -292,7 +288,7 @@ DEVICE_FRAMEWORK_MANIFEST_FILE += \
 PRODUCT_PACKAGES += \
     OmniDisplayManager
 
-# Hede notch
+# Hide notch
 PRODUCT_PACKAGES += \
     NoCutoutOverlay
 
