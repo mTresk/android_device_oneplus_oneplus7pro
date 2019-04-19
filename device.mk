@@ -206,7 +206,7 @@ PRODUCT_PACKAGES += \
 
 # ARStickers
 PRODUCT_PACKAGES += \
-    ARStickersMod
+    Playground
 
 # OOS Camera
 PRODUCT_PACKAGES += \
