@@ -1,6 +1,6 @@
 [
   {
-    "remote": "omnirom",
+    "remote": "mtresk",
     "repository": "android_frameworks_native",
     "target_path": "frameworks/native",
     "revision": "android-9.0-caf",
