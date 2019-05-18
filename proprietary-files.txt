@@ -36,6 +36,7 @@ etc/permissions/com.oem.feature.xml
 etc/permissions/com.oem.features_secrecy.xml
 etc/permissions/com.oneplus.software.xml
 etc/permissions/com.qrd.wappush.xml
+etc/permissions/telephonyservice.xml
 etc/permissions/qti_permissions.xml
 etc/public.libraries-qti.txt
 #etc/scve/facereco/gModel.dat
@@ -487,3 +488,5 @@ lib/libnxpnfc-nci.so
 lib64/vendor.nxp.nxpnfc@1.0.so
 lib/vendor.nxp.nxpnfc@1.0.so
 etc/nfcee_access.xml
+
+-priv-app/OPNetworkSetting/OPNetworkSetting.apk|d25e3155dc84b34f233e1f543c2d3deace603385
