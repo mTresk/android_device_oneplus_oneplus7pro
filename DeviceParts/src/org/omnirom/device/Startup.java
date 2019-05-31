@@ -26,63 +26,30 @@ import android.provider.Settings;
 import android.text.TextUtils;
 
 public class Startup extends BroadcastReceiver {
-    private static void restore(String file, boolean enabled) {
+
+    private void restore(String file, boolean enabled) {
         if (file == null) {
             return;
         }
-        Utils.writeValue(file, enabled ? "1" : "0");
+        if (enabled) {
+            Utils.writeValue(file, "1");
+        }
     }
 
-    private static void restore(String file, String value) {
+    private void restore(String file, String value) {
         if (file == null) {
             return;
         }
         Utils.writeValue(file, value);
     }
 
-    private static String getGestureFile(String key) {
+    private String getGestureFile(String key) {
         return GestureSettings.getGestureFile(key);
-    }
-
-    private void maybeImportOldSettings(Context context) {
-        boolean imported = Settings.System.getInt(context.getContentResolver(), "omni_device_setting_imported", 0) != 0;
-        if (!imported) {
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-            boolean enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
-            Settings.System.putInt(context.getContentResolver(), SRGBModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HBM_SWITCH, false);
-            Settings.System.putInt(context.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
-            Settings.System.putInt(context.getContentResolver(), DCIModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
-            Settings.System.putInt(context.getContentResolver(), NightModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_ADAPTIVE_SWITCH, false);
-            Settings.System.putInt(context.getContentResolver(), AdaptiveModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_ONEPLUS_SWITCH, false);
-            Settings.System.putInt(context.getContentResolver(), OnePlusModeSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_OTG_SWITCH, false);
-            Settings.System.putInt(context.getContentResolver(), UsbOtgSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
-            String vibrStrength = sharedPrefs.getString(DeviceSettings.KEY_VIBSTRENGTH, VibratorStrengthPreference.DEFAULT_VALUE); 
-            Settings.System.putString(context.getContentResolver(), VibratorStrengthPreference.SETTINGS_KEY, vibrStrength);
-
-            Settings.System.putInt(context.getContentResolver(), "omni_device_setting_imported", 1);
-        }
     }
 
     @Override
     public void onReceive(final Context context, final Intent bootintent) {
-        maybeImportOldSettings(context);
-        restoreAfterUserSwitch(context);
-    }
 
-    public static void restoreAfterUserSwitch(Context context) {
         // double swipe -> music play
         String mapping = GestureSettings.DEVICE_GESTURE_MAPPING_0;
         String value = Settings.System.getString(context.getContentResolver(), mapping);
@@ -163,25 +130,21 @@ public class Startup extends BroadcastReceiver {
         enabled = !TextUtils.isEmpty(value) && !value.equals(AppSelectListPreference.DISABLED_ENTRY);
         restore(getGestureFile(GestureSettings.FP_GESTURE_LONG_PRESS_APP), enabled);
 
-        enabled = Settings.System.getInt(context.getContentResolver(), SRGBModeSwitch.SETTINGS_KEY, 0) != 0;
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
         restore(SRGBModeSwitch.getFile(), enabled);
-
-        enabled = Settings.System.getInt(context.getContentResolver(), DCIModeSwitch.SETTINGS_KEY, 0) != 0;
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HBM_SWITCH, false);
+        restore(HBMModeSwitch.getFile(), enabled);
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         restore(DCIModeSwitch.getFile(), enabled);
-
-        enabled = Settings.System.getInt(context.getContentResolver(), NightModeSwitch.SETTINGS_KEY, 0) != 0;
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
         restore(NightModeSwitch.getFile(), enabled);
-
-        enabled = Settings.System.getInt(context.getContentResolver(), AdaptiveModeSwitch.SETTINGS_KEY, 0) != 0;
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_ADAPTIVE_SWITCH, false);
         restore(AdaptiveModeSwitch.getFile(), enabled);
-
-        enabled = Settings.System.getInt(context.getContentResolver(), OnePlusModeSwitch.SETTINGS_KEY, 0) != 0;
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_ONEPLUS_SWITCH, false);
         restore(OnePlusModeSwitch.getFile(), enabled);
 
-        enabled = Settings.System.getInt(context.getContentResolver(), HBMModeSwitch.SETTINGS_KEY, 0) != 0;
-        restore(HBMModeSwitch.getFile(), enabled);
-
-        enabled = Settings.System.getInt(context.getContentResolver(), UsbOtgSwitch.SETTINGS_KEY, 0) != 0;
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_OTG_SWITCH, false);
         restore(UsbOtgSwitch.getFile(), enabled);
 
         VibratorStrengthPreference.restore(context);

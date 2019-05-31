@@ -184,7 +184,6 @@ public class KeyHandler implements DeviceKeyHandler {
     private ClientPackageNameObserver mClientObserver;
     private IOnePlusCameraProvider mProvider;
     private boolean isOPCameraAvail;
-    private boolean mRestoreUser;
 
     private SensorEventListener mProximitySensor = new SensorEventListener() {
         @Override
@@ -268,7 +267,7 @@ public class KeyHandler implements DeviceKeyHandler {
         }
     }
 
-    private BroadcastReceiver mSystemStateReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
          @Override
          public void onReceive(Context context, Intent intent) {
              if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
@@ -277,14 +276,6 @@ public class KeyHandler implements DeviceKeyHandler {
              } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                  mDispOn = false;
                  onDisplayOff();
-             } else if (intent.getAction().equals(Intent.ACTION_USER_SWITCHED)) {
-                int userId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, UserHandle.USER_NULL);
-                if (userId == UserHandle.USER_SYSTEM && mRestoreUser) {
-                    if (DEBUG) Log.i(TAG, "ACTION_USER_SWITCHED to system");
-                    Startup.restoreAfterUserSwitch(context);
-                } else {
-                    mRestoreUser = true;
-                }
              }
          }
     };
@@ -303,10 +294,9 @@ public class KeyHandler implements DeviceKeyHandler {
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mTiltSensor = getSensor(mSensorManager, "oneplus.sensor.op_motion_detect");
         mPocketSensor = getSensor(mSensorManager, "oneplus.sensor.pocket");
-        IntentFilter systemStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        systemStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        systemStateFilter.addAction(Intent.ACTION_USER_SWITCHED);
-        mContext.registerReceiver(mSystemStateReceiver, systemStateFilter);
+        IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mContext.registerReceiver(mScreenStateReceiver, screenStateFilter);
         (new UEventObserver() {
             @Override
             public void onUEvent(UEventObserver.UEvent event) {
