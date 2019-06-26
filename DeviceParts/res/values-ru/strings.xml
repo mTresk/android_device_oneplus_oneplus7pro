@@ -39,6 +39,7 @@
   <string name="proxi_summary_head">Проверить датчики жестов и отпечатков пальцев</string>
   <string name="proxi_title_head">Проверка датчика приближения</string>
   <string name="slider_mode_off">Выкл.</string>
+  <string name="slider_mode_flashlight">Фонарик</string>
   <string name="slider_mode_vibrate">Вибрация</string>
   <string name="slider_mode_silent">Без звука</string>
   <string name="slider_mode_priority">Только важные</string>
