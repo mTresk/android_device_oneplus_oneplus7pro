@@ -1,5 +1,6 @@
-#allow cameraserver camera_data_file:file w_file_perms;
-allow cameraserver mediacodec:binder call;
+allow cameraserver property_socket:sock_file write;
+allow cameraserver vendor_data_file:file write;
 
-allow cameraserver vendor_data_file:file { getattr open write };
+allow cameraserver exported_system_prop:property_service set;
+allow cameraserver init:unix_stream_socket connectto;
 
