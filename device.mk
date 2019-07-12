@@ -31,7 +31,7 @@ PRODUCT_COPY_FILES += \
 TARGET_SUPPORTS_32_BIT_APPS := true
 TARGET_SUPPORTS_64_BIT_APPS := true
 TARGET_GAPPS_ARCH := arm64
-TARGET_BOOT_ANIMATION_RES := 1080
+TARGET_BOOT_ANIMATION_RES := 1440
 IS_PHONE := true
 TARGET_MINIMAL_APPS := false
 TARGET_INCLUDE_STOCK_ARCORE := true
@@ -207,10 +207,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Playground
 
-# OOS Camera
-PRODUCT_PACKAGES += \
-    OnePlusCameraService
-
 # power
 PRODUCT_PACKAGES += \
     power.oneplus6
@@ -293,10 +289,6 @@ DEVICE_FRAMEWORK_MANIFEST_FILE += \
 
 PRODUCT_PACKAGES += \
     OmniDisplayManager
-
-# Hide notch
-PRODUCT_PACKAGES += \
-    NoCutoutOverlay
 
 # Temporary handling
 #
