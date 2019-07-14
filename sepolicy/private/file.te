@@ -12,3 +12,5 @@ type proc_touchpanel, fs_type;
 type hal_cameraHIDL_hwservice, service_manager_type;
 type hal_cameraHIDL_default, service_manager_type;
 type vendor_camera_prop, property_type;
+
+type sysfs_fod, sysfs_type, fs_type;
