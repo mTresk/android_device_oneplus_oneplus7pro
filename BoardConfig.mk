@@ -20,7 +20,8 @@
 #
 BOARD_PATH := device/oneplus/oneplus7pro
 
-TARGET_USE_SDCLANG:= true
+TARGET_INIT_VENDOR_LIB := libinit_oneplus7pro
+TARGET_USE_SDCLANG := true
 PRODUCT_FULL_TREBLE := true
 BOARD_VNDK_VERSION := current
 BOARD_VNDK_RUNTIME_DISABLE := false
@@ -300,3 +301,7 @@ TW_MAX_BRIGHTNESS := 255
 TW_NO_USB_STORAGE := false
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_THEME := portrait_hdpi
+
+#HIDL
+DEVICE_MATRIX_FILE   := $(BOARD_PATH)/compatibility_matrix.device.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += $(BOARD_PATH)/vendor_framework_compatibility_matrix.xml

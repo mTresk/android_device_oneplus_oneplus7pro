@@ -60,9 +60,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.android.settings.Settings$SwipeToNotificationSuggestionActivity"
+            android:name="org.omnirom.device.PanelSettingsActivity"
             android:exported="true"
-            android:label="@string/fp_swipe_down_switch_title_head"
+            android:label="@string/panel_category_title"
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,9 +70,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.omnirom.device.PanelSettingsActivity"
+            android:name="org.omnirom.device.DisplayModesSettingsActivity"
             android:exported="true"
-            android:label="@string/panel_category_title"
+            android:label="@string/display_modes_category_title"
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -103,6 +103,9 @@
                 <action
                     android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
+        </service>
+        <service android:name="org.omnirom.device.FallSensorService"
+                 android:permission="OnePlusCameraHelperService">
         </service>
     </application>
 </manifest>

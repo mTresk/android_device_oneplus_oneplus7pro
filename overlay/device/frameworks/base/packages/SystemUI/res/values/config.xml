@@ -20,7 +20,7 @@
 <!-- These resources are around just to allow their values to be customized
      for different hardware and product builds. -->
 <resources>
-    <string name="device_doze_proximity_sensor">oneplus.sensor.pocket</string>
+    <string name="device_doze_proximity_sensor">null</string>
     <bool name="device_doze_proximity_sensor_inverted">false</bool>
 
     <!-- Doze: a list of pickup sensor subtypes that perform a proximity check before they trigger.
@@ -36,6 +36,10 @@
                          1,,4a3   -> illegal, no empty or non-numeric terms allowed
     -->
     <string name="doze_pickup_subtype_performs_proximity_check">!*</string>
+
+    <!-- Max visible notification icons -->
+    <integer name="config_maxVisibleNotificationIcons">8</integer>
+    <integer name="config_maxVisibleNotificationIconsWhenDark">9</integer>
 
 </resources>
 

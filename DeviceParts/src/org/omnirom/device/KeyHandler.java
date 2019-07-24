@@ -52,6 +52,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.provider.Settings.Global;
+import android.provider.Settings.Secure;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telephony.SubscriptionInfo;
@@ -68,6 +69,8 @@ import com.android.internal.util.omni.OmniUtils;
 import org.omnirom.omnilib.utils.OmniVibe;
 import com.android.internal.statusbar.IStatusBarService;
 
+import org.omnirom.device.CameraMotorController;
+
 import vendor.oneplus.camera.CameraHIDL.V1_0.IOnePlusCameraProvider;
 
 public class KeyHandler implements DeviceKeyHandler {
@@ -78,7 +81,7 @@ public class KeyHandler implements DeviceKeyHandler {
 
     protected static final int GESTURE_REQUEST = 1;
     private static final int GESTURE_WAKELOCK_DURATION = 2000;
-    private static final String GOODIX_CONTROL_PATH = "/sys/devices/platform/soc/soc:goodix_fp/proximity_state";
+    private static final String DT2W_CONTROL_PATH = "/proc/touchpanel/double_tap_enable";
 
     private static final int GESTURE_CIRCLE_SCANCODE = 250;
     private static final int GESTURE_V_SCANCODE = 252;
@@ -103,9 +106,8 @@ public class KeyHandler implements DeviceKeyHandler {
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
     private static final int HANDWAVE_MAX_DELTA_MS = 1000;
     private static final int POCKET_MIN_DELTA_MS = 5000;
-    private static final int FP_GESTURE_LONG_PRESS = 305;
 
-    private static final boolean sIsOnePlus6 = android.os.Build.MODEL.equals("ONEPLUS A6003");
+    private static final boolean sIsOnePlus7pro = android.os.Build.PRODUCT.equals("OnePlus7pro");
 
     public static final String CLIENT_PACKAGE_NAME = "com.oneplus.camera";
     public static final String CLIENT_PACKAGE_PATH = "/data/vendor/omni/client_package_name";
@@ -125,7 +127,6 @@ public class KeyHandler implements DeviceKeyHandler {
         KEY_SLIDER_TOP,
         KEY_SLIDER_CENTER,
         KEY_SLIDER_BOTTOM,
-        FP_GESTURE_LONG_PRESS,
     };
 
     private static final int[] sSupportedGestures = new int[]{
@@ -178,26 +179,20 @@ public class KeyHandler implements DeviceKeyHandler {
     private boolean mUseWaveCheck;
     private Sensor mPocketSensor;
     private boolean mUsePocketCheck;
-    private boolean mFPcheck;
     private boolean mDispOn;
-    private boolean isFpgesture;
     private ClientPackageNameObserver mClientObserver;
     private IOnePlusCameraProvider mProvider;
     private boolean isOPCameraAvail;
     private boolean mRestoreUser;
     private boolean mToggleTorch = false;
     private boolean mTorchState = false;
+    private boolean mDoubleTapToWake;
 
     private SensorEventListener mProximitySensor = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             mProxyIsNear = event.values[0] == 1;
             if (DEBUG_SENSOR) Log.i(TAG, "mProxyIsNear = " + mProxyIsNear + " mProxyWasNear = " + mProxyWasNear);
-            if (mUseProxiCheck) {
-                if (Utils.fileWritable(GOODIX_CONTROL_PATH)) {
-                    Utils.writeValue(GOODIX_CONTROL_PATH, mProxyIsNear ? "1" : "0");
-                }
-            }
             if (mUseWaveCheck || mUsePocketCheck) {
                 if (mProxyWasNear && !mProxyIsNear) {
                     long delta = SystemClock.elapsedRealtime() - mProxySensorTimestamp;
@@ -244,6 +239,9 @@ public class KeyHandler implements DeviceKeyHandler {
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.OMNI_DEVICE_FEATURE_SETTINGS),
                     false, this);
+            mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.DOUBLE_TAP_TO_WAKE),
+                    false, this);
             update();
             updateDozeSettings();
         }
@@ -259,7 +257,7 @@ public class KeyHandler implements DeviceKeyHandler {
                     Settings.System.OMNI_DEVICE_FEATURE_SETTINGS))){
                 updateDozeSettings();
                 return;
-            }
+            } 
             update();
         }
 
@@ -267,6 +265,9 @@ public class KeyHandler implements DeviceKeyHandler {
             mUseProxiCheck = Settings.System.getIntForUser(
                     mContext.getContentResolver(), Settings.System.OMNI_DEVICE_PROXI_CHECK_ENABLED, 1,
                     UserHandle.USER_CURRENT) == 1;
+            mDoubleTapToWake = Settings.Secure.getInt(
+                    mContext.getContentResolver(), Settings.Secure.DOUBLE_TAP_TO_WAKE, 1) == 1;
+            updateDoubleTapToWake();
         }
     }
 
@@ -348,33 +349,14 @@ public class KeyHandler implements DeviceKeyHandler {
     public boolean handleKeyEvent(KeyEvent event) {
         if (event.getAction() != KeyEvent.ACTION_UP) {
             return false;
+        } else {
+            return ArrayUtils.contains(sSupportedGestures, event.getScanCode());
         }
-
-        isFpgesture = false;
-
-        if (DEBUG) Log.i(TAG, "nav_code= " + event.getScanCode());
-        int fpcode = event.getScanCode();
-        mFPcheck = canHandleKeyEvent(event);
-        String value = getGestureValueForFPScanCode(fpcode);
-        if (mFPcheck && mDispOn && !TextUtils.isEmpty(value) && !value.equals(AppSelectListPreference.DISABLED_ENTRY)){
-            isFpgesture = true;
-            if (!launchSpecialActions(value) && !isCameraLaunchEvent(event)) {
-                    OmniVibe.performHapticFeedbackLw(HapticFeedbackConstants.LONG_PRESS, false, mContext);
-                    Intent intent = createIntent(value);
-                    if (DEBUG) Log.i(TAG, "intent = " + intent);
-                    mContext.startActivity(intent);
-            }
-        }
-        return isFpgesture;
     }
 
     @Override
     public boolean canHandleKeyEvent(KeyEvent event) {
-        if (sIsOnePlus6) {
-            return ArrayUtils.contains(sSupportedGestures6, event.getScanCode());
-        } else {
-            return ArrayUtils.contains(sSupportedGestures, event.getScanCode());
-        }
+        return ArrayUtils.contains(sSupportedGestures, event.getScanCode());
     }
 
     @Override
@@ -393,13 +375,8 @@ public class KeyHandler implements DeviceKeyHandler {
         if (event.getAction() != KeyEvent.ACTION_UP) {
             return false;
         }
-        if (mFPcheck) {
-            String value = getGestureValueForFPScanCode(event.getScanCode());
-            return !TextUtils.isEmpty(value) && value.equals(AppSelectListPreference.CAMERA_ENTRY);
-        } else {
-            String value = getGestureValueForScanCode(event.getScanCode());
-            return !TextUtils.isEmpty(value) && value.equals(AppSelectListPreference.CAMERA_ENTRY);
-        }
+        String value = getGestureValueForScanCode(event.getScanCode());
+        return !TextUtils.isEmpty(value) && value.equals(AppSelectListPreference.CAMERA_ENTRY);
     }
 
     @Override
@@ -469,7 +446,6 @@ public class KeyHandler implements DeviceKeyHandler {
         if (DEBUG) Log.i(TAG, "Display on");
         if (enableProxiSensor()) {
             mSensorManager.unregisterListener(mProximitySensor, mPocketSensor);
-            enableGoodix();
         }
         if (mUseTiltCheck) {
             mSensorManager.unregisterListener(mTiltSensorListener, mTiltSensor);
@@ -478,11 +454,16 @@ public class KeyHandler implements DeviceKeyHandler {
             mClientObserver = new ClientPackageNameObserver(CLIENT_PACKAGE_PATH);
             mClientObserver.startWatching();
         }
+        if (sIsOnePlus7pro) {
+            //mMotorHandler.removeCallbacksAndMessages(mCameraMotorSwitch);
+            CameraMotorController.toggleCameraSwitch(true);
+        }
     }
 
-    private void enableGoodix() {
-        if (Utils.fileWritable(GOODIX_CONTROL_PATH)) {
-            Utils.writeValue(GOODIX_CONTROL_PATH, "0");
+    private void updateDoubleTapToWake() {
+        Log.i(TAG, "udateDoubleTapToWake " + mDoubleTapToWake);
+        if (Utils.fileWritable(DT2W_CONTROL_PATH)) {
+            Utils.writeValue(DT2W_CONTROL_PATH, mDoubleTapToWake ? "1" : "0");
         }
     }
 
@@ -501,6 +482,9 @@ public class KeyHandler implements DeviceKeyHandler {
         if (mClientObserver != null) {
             mClientObserver.stopWatching();
             mClientObserver = null;
+        }
+        if (sIsOnePlus7pro) {
+            CameraMotorController.toggleCameraSwitch(false);
         }
     }
 
@@ -678,14 +662,6 @@ public class KeyHandler implements DeviceKeyHandler {
             case GESTURE_RIGHT_SWIPE_SCANCODE:
                 return Settings.System.getStringForUser(mContext.getContentResolver(),
                     GestureSettings.DEVICE_GESTURE_MAPPING_9, UserHandle.USER_CURRENT);
-        }
-        return null;
-    }
-
-    private String getGestureValueForFPScanCode(int scanCode) {
-        if (FP_GESTURE_LONG_PRESS == scanCode) {
-            return Settings.System.getStringForUser(mContext.getContentResolver(),
-                   GestureSettings.DEVICE_GESTURE_MAPPING_10, UserHandle.USER_CURRENT);
         }
         return null;
     }
