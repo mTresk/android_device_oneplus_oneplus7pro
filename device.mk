@@ -160,6 +160,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     GoogleCameraModOP6
 
+# OOS Camera
+PRODUCT_PACKAGES += \
+    OnePlusCameraService
+
 # ARStickers
 PRODUCT_PACKAGES += \
     Playground

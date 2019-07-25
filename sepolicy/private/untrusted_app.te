@@ -1,1 +1,2 @@
 allow untrusted_app_25 system_server_tmpfs:file { read };
+allow untrusted_app vendor_camera_prop:file { read open getattr map };
