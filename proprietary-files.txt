@@ -249,6 +249,7 @@ lib64/vendor.qti.hardware.radio.ims@1.0.so
 lib64/vendor.qti.hardware.radio.ims@1.1.so
 lib64/vendor.qti.hardware.radio.ims@1.2.so
 lib64/vendor.qti.hardware.radio.ims@1.3.so
+lib64/vendor.qti.hardware.radio.ims@1.4.so
 lib64/vendor.qti.hardware.radio.lpa@1.0.so
 lib64/vendor.qti.hardware.radio.qcrilhook@1.0.so
 lib64/vendor.qti.hardware.radio.qtiradio@1.0.so
@@ -375,6 +376,7 @@ lib/vendor.qti.hardware.radio.ims@1.0.so
 lib/vendor.qti.hardware.radio.ims@1.1.so
 lib/vendor.qti.hardware.radio.ims@1.2.so
 lib/vendor.qti.hardware.radio.ims@1.3.so
+lib/vendor.qti.hardware.radio.ims@1.4.so
 lib/vendor.qti.hardware.radio.lpa@1.0.so
 lib/vendor.qti.hardware.radio.qcrilhook@1.0.so
 lib/vendor.qti.hardware.radio.qtiradio@1.0.so
@@ -436,7 +438,7 @@ lib/libqvr_cam_cdsp_driver_stub.so
 lib/libqvr_eyetracking_plugin.so
 lib/libqvr_cdsp_driver_stub.so
 
--app/OPSoundTuner/OPSoundTuner.apk|09e66ce97f925f98acaaed68e09f27362e79a061
+-app/OPSoundTuner/OPSoundTuner.apk|f881f395dcd6bd574ce77607f483ec3fa4f2e549
 etc/permissions/com.dolby.daxservice.xml
 -priv-app/daxService/daxService.apk
 
@@ -499,4 +501,3 @@ framework/uimservicelibrary.jar
 -framework/uimremoteclientlibrary.jar
 etc/permissions/uimremoteclient.xml
 etc/permissions/lpa.xml
-
