@@ -121,6 +121,7 @@ framework/com.qti.dpmframework.jar
 -framework/com.qualcomm.qti.imscmservice-V2.0-java.jar
 -framework/com.qualcomm.qti.imscmservice-V2.1-java.jar
 -framework/com.qualcomm.qti.uceservice-V2.0-java.jar
+-app/uceShimService/uceShimService.apk
 framework/dpmapi.jar
 framework/embmslibrary.jar
 framework/izat.xt.srv.jar
@@ -145,6 +146,8 @@ lib64/com.qualcomm.qti.imscmservice@2.1.so
 lib64/com.qualcomm.qti.uceservice@2.0.so
 #lib64/com.qualcomm.qti.wifidisplayhal@1.0.so
 #-lib64/hw/hwcomposer.qcom.so|112747a053fd3408eccae5748917a60b3a569668
+lib64/libaptXHD_encoder.so|90f47f10af28b3ead143200cb4370b847c513127
+lib64/libaptX_encoder.so|0cebad28afcf29f931bdc2d24fce2730dc882ecf
 lib64/libadsprpc_system.so
 lib64/libmdsprpc_system.so
 lib64/libantradio.so
@@ -501,3 +504,5 @@ framework/uimservicelibrary.jar
 -framework/uimremoteclientlibrary.jar
 etc/permissions/uimremoteclient.xml
 etc/permissions/lpa.xml
+
+-app/DynamicDDSService/DynamicDDSService.apk

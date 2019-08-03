@@ -324,6 +324,7 @@ ro.location.osnlp.package=com.google.android.gms
 ro.location.osnlp.region.package=
 
 #omni
+ro.camera.notify_nfc=0
 ro.boot.project_name=18821
 ro.vendor.boot.project_name=18821
 persist.vendor.sys.fp.fod.location.X_Y=605,2613
@@ -346,6 +347,10 @@ dalvik.vm.heapmaxfree=8m
 sdm.debug.disable_inline_rotator=1
 sdm.debug.disable_inline_rotator_secure=1
 persist.vendor.diag.max.size=500
+
+ro.vibrator.hal.tick.duration=0
+ro.vibrator.hal.click.duration=0
+ro.vibrator.hal.heavyclick.duration=10
 
 #HWC
 persist.vendor.color.matrix=2
