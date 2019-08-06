@@ -1461,6 +1461,8 @@ status_t AudioPolicyManagerCustom::getOutputForAttr(const audio_attributes_t *at
         } else {
             ALOGI("%s:: attribute is NULL .. no usage set", __func__);
         }
+    } else if (tConfig.offload_info.channel_mask == AUDIO_CHANNEL_NONE) {
+        tConfig.offload_info.channel_mask = config->channel_mask;
     }
 
     return AudioPolicyManager::getOutputForAttr(attr, output, session, stream,
@@ -2245,9 +2247,9 @@ status_t AudioPolicyManagerCustom::startInput(audio_io_handle_t input,
 
         if (inputDesc->getAudioSessionCount(true/*activeOnly*/) == 1) {
             // if input maps to a dynamic policy with an activity listener, notify of state change
-            if ((inputDesc->mPolicyMix != NULL)
-                    && ((inputDesc->mPolicyMix->mCbFlags & AudioMix::kCbFlagNotifyActivity) != 0)) {
-                mpClientInterface->onDynamicPolicyMixStateUpdate(inputDesc->mPolicyMix->mDeviceAddress,
+            if ((inputDesc->mPolicyMix.promote() != NULL)
+                    && ((inputDesc->mPolicyMix.promote()->mCbFlags & AudioPolicyMix::kCbFlagNotifyActivity) != 0)) {
+                mpClientInterface->onDynamicPolicyMixStateUpdate(inputDesc->mPolicyMix.promote()->mDeviceAddress,
                         MIX_STATE_MIXING);
             }
 
@@ -2268,8 +2270,8 @@ status_t AudioPolicyManagerCustom::startInput(audio_io_handle_t input,
                 String8 address = String8("");
                 if (inputDesc->mPolicyMix == NULL) {
                     address = String8("0");
-                } else if (inputDesc->mPolicyMix->mMixType == MIX_TYPE_PLAYERS) {
-                    address = inputDesc->mPolicyMix->mDeviceAddress;
+                } else if (inputDesc->mPolicyMix.promote()->mMixType == MIX_TYPE_PLAYERS) {
+                    address = inputDesc->mPolicyMix.promote()->mDeviceAddress;
                 }
                 if (address != "") {
                     setDeviceConnectionStateInt(AUDIO_DEVICE_OUT_REMOTE_SUBMIX,
