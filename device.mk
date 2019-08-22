@@ -157,12 +157,14 @@ PRODUCT_PACKAGES += \
     lib_driver_cmd_qcwcn
 
 # Google Camera
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     GoogleCameraModOP6
 
 # OOS Camera
 PRODUCT_PACKAGES += \
-    OnePlusCameraService
+    OnePlusCamera \
+    OnePlusCameraService \
+    OnePlusGallery
 
 # ARStickers
 PRODUCT_PACKAGES += \
