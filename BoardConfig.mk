@@ -21,7 +21,7 @@
 BOARD_PATH := device/oneplus/oneplus7pro
 include $(BOARD_PATH)/BoardConfigGsi.mk
 
-TARGET_INIT_VENDOR_LIB := libinit_oneplus7pro
+#TARGET_INIT_VENDOR_LIB := libinit_oneplus7pro
 PRODUCT_FULL_TREBLE := true
 BOARD_VNDK_VERSION := current
 BOARD_VNDK_RUNTIME_DISABLE := false
@@ -96,7 +96,7 @@ TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image-dtb
 TARGET_KERNEL_SOURCE := kernel/oneplus/sm8150
 ifeq ($(TARGET_DEVICE),oneplus7pro)
-TARGET_KERNEL_CONFIG := vendor/omni_oneplus7pro_defconfig
+TARGET_KERNEL_CONFIG := redflare_defconfig
 endif
 BOARD_KERNEL_SEPARATED_DTBO := true
 

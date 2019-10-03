@@ -21,6 +21,12 @@
 #
 $(call inherit-product-if-exists, vendor/gapps/arm64/arm64-vendor.mk)
 
+# Gapps
+TARGET_GAPPS_ARCH := arm64
+TARGET_BOOT_ANIMATION_RES := 1440
+IS_PHONE := true
+TARGET_MINIMAL_APPS := false
+
 PRODUCT_PACKAGES := com.android.apex.cts.shim.v1_prebuilt
 TARGET_FLATTEN_APEX := false
 
@@ -108,9 +114,11 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/media_codecs_google_video.xml
 
-# Camera
+# OOS Camera
 PRODUCT_PACKAGES += \
-    SnapdragonCamera2
+    OnePlusCamera \
+    OnePlusCameraService \
+    OnePlusGallery
 
 # ANT+
 PRODUCT_PACKAGES += \
