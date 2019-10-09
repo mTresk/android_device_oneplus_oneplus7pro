@@ -1,10 +1,7 @@
 import /init.redflare.rc
 
 on init
-    mount none /system/etc/audio_policy_configuration_omni.xml /vendor/etc/audio/audio_policy_configuration.xml bind
     mount none /system/lib/modules/wlan.ko /vendor/lib/modules/qca_cld3_wlan.ko bind
-    mount none /system/lib/hw/lights.oneplus7pro.so /vendor/lib/hw/lights.msmnile.so bind
-    mount none /system/lib64/hw/lights.oneplus7pro.so /vendor/lib64/hw/lights.msmnile.so bind
     mount none /dev/null /vendor/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk bind
     mount none /dev/null /vendor/overlay/BluetoothResCommon.apk bind
     mount none /dev/null /vendor/overlay/SystemUIResCommon.apk bind
@@ -61,6 +58,15 @@ on boot
 
     chown system system /proc/touchpanel/down_swipe_enable
     chmod 0660 /proc/touchpanel/down_swipe_enable
+
+    chown system system /proc/touchpanel/letter_m_enable
+    chmod 0660 /proc/touchpanel/letter_m_enable
+
+    chown system system /proc/touchpanel/letter_w_enable
+    chmod 0660 /proc/touchpanel/letter_w_enable
+
+    chown system system /proc/touchpanel/letter_s_enable
+    chmod 0660 /proc/touchpanel/letter_s_enable
 
     chmod 0660 /sys/devices/soc/soc:fpc_fpc1020/proximity_state
     chown system system /sys/devices/soc/soc:fpc_fpc1020/proximity_state
@@ -146,8 +152,6 @@ on boot
     write /data/vendor/omni/client_package_name 0
     chown cameraserver audio /data/vendor/omni/client_package_name
     chmod 0644 /data/vendor/omni/client_package_name
-
-    setprop vendor.camera.aux.packagelist org.omnirom.snap,com.oneplus.camera
 
 on post-fs
     # Vibrator

@@ -30,7 +30,7 @@ TARGET_MINIMAL_APPS := false
 PRODUCT_PACKAGES := com.android.apex.cts.shim.v1_prebuilt
 TARGET_FLATTEN_APEX := false
 
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     libinit_oneplus7pro
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -101,13 +101,10 @@ PRODUCT_AAPT_CONFIG := xxhdpi
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 PRODUCT_CHARACTERISTICS := nosdcard
 
-# Lights
+# Lights & Health
 PRODUCT_PACKAGES += \
-    lights.oneplus7pro
-
-PRODUCT_PACKAGES += \
-    android.hardware.light-V2.0-java \
-    android.hardware.light@2.0-impl
+    android.hardware.health@2.0-service.oneplus7pro \
+    android.hardware.light@2.0-service.oneplus7pro
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/media_codecs_google_audio.xml \

@@ -16,5 +16,6 @@
 */
 -->
 <resources>
-    <dimen name="system_icons_keyguard_padding_end">16dp</dimen>
+    <!-- Margin end of the system icons super container when the avatar is missing. -->
+    <dimen name="system_icons_super_container_avatarless_margin_end">16dp</dimen>
 </resources>
