@@ -23,4 +23,6 @@ allow init omni_sysfs_motor:file { write open };
 
 allow init property_socket:sock_file write;
 
-permissive init;
+allow init sysfs_cpu_boost:file write;
+allow init sysfs_devices_system_cpu:file write;
+allow init sysfs_dm:file write;
