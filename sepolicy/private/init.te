@@ -26,3 +26,4 @@ allow init property_socket:sock_file write;
 allow init sysfs_cpu_boost:file write;
 allow init sysfs_devices_system_cpu:file write;
 allow init sysfs_dm:file write;
+allow init proc:file write;
