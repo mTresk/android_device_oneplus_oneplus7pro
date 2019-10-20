@@ -30,7 +30,7 @@ TARGET_MINIMAL_APPS := false
 PRODUCT_PACKAGES := com.android.apex.cts.shim.v1_prebuilt
 TARGET_FLATTEN_APEX := false
 
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     libinit_oneplus7pro
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -67,7 +67,8 @@ PRODUCT_PACKAGES_DEBUG += \
 # Boot control
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl.recovery \
-    bootctrl.msmnile.recovery
+    bootctrl.msmnile.recovery \
+    fastbootd
 
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
@@ -97,12 +98,13 @@ PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,device/oneplus/oneplus7pro/prebuilt/root,root)
 
 
-PRODUCT_AAPT_CONFIG := xxhdpi
-PRODUCT_AAPT_PREF_CONFIG := xxhdpi
+PRODUCT_AAPT_CONFIG := xxxhdpi
+PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
 PRODUCT_CHARACTERISTICS := nosdcard
 
 # Lights & Health
 PRODUCT_PACKAGES += \
+    libhealthd.msm \
     android.hardware.health@2.0-service.oneplus7pro \
     android.hardware.light@2.0-service.oneplus7pro
 
@@ -152,11 +154,18 @@ PRODUCT_PACKAGES += \
     vendor.display.config@1.10 \
     libdisplayconfig \
     libqdMetaData.system \
+    libqdMetaData \
     vendor.nxp.nxpese@1.0 \
     vendor.nxp.nxpnfc@1.0 \
     vendor.oneplus.camera.CameraHIDL@1.0 \
     vendor.oneplus.fingerprint.extension@1.0 \
     vendor.qti.hardware.camera.device@1.0
+
+#Nfc
+PRODUCT_PACKAGES += \
+    android.hardware.nfc@1.0 \
+    android.hardware.nfc@1.1 \
+    android.hardware.nfc@1.2
 
 # Display
 PRODUCT_PACKAGES += \
@@ -186,6 +195,16 @@ PRODUCT_PACKAGES += \
 # Fingerprint
 PRODUCT_PACKAGES += \
     omni.biometrics.fingerprint.inscreen@1.0-service.oneplus7pro
+
+# Remove unwanted packages
+PRODUCT_PACKAGES += \
+    RemovePackages
+
+PRODUCT_BOOT_JARS += \
+    com.nxp.nfc \
+    tcmiface \
+    WfdCommon \
+    qcnvitems
 
 # Temporary handling
 #

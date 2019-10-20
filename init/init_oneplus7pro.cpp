@@ -33,7 +33,6 @@
 #include <android-base/properties.h>
 #include <android-base/logging.h>
 #include "property_service.h"
-#include "log.h"
 #include <sys/resource.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
@@ -99,14 +98,14 @@ void vendor_load_properties()
     op_variant = read_file2(OP_VARIANT, tmp, sizeof(tmp));
     LOG(INFO) << name;
     if (name == "OnePlus7Pro_EEA") {
-        property_override("ro.build.fingerprint", "OnePlus/OnePlus7Pro_EEA/OnePlus7Pro:10/QKQ1.190716.003/1909110008:user/release-keys");
-        property_override("ro.build.description", "OnePlus7Pro-user 10 QKQ1.190716.003 1909110008 release-keys");
-        property_override("ro.build.model", "GM1913");
+        property_override("ro.build.fingerprint", "OnePlus/OnePlus7Pro_EEA/OnePlus7Pro:10/QKQ1.190716.003/1910071200:user/release-keys");
+        property_override("ro.build.description", "OnePlus7Pro-user 10 QKQ1.190716.003 1910071200 release-keys");
+        property_override("ro.build.model", "GM1917");
     }
     if (name == "OnePlus7Pro") {
-        property_override("ro.build.fingerprint", "OnePlus/OnePlus7Pro/OnePlus7Pro:10/QKQ1.190716.003/1909110008:user/release-keys");
-        property_override("ro.build.description", "OnePlus7Pro-user 10 QKQ1.190716.003 1909110008 release-keys");
-        property_override("ro.build.model", "GM1917");
+        property_override("ro.build.fingerprint", "OnePlus/OnePlus7Pro/OnePlus7Pro:10/QKQ1.190716.003/1910071200:user/release-keys");
+        property_override("ro.build.description", "OnePlus7Pro-user 10 QKQ1.190716.003 1910071200 release-keys");
+        property_override("ro.build.model", "GM1913");
     }
 
     /*Check for kgsl node and disable HW composition*/

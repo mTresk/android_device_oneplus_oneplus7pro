@@ -15,3 +15,5 @@ type sysfs_fod, sysfs_type, fs_type;
 type sysfs_usb_supply, sysfs_type, fs_type;
 
 type sysfs_cpu_boost, sysfs_type, fs_type;
+
+type oem_device, dev_type;
