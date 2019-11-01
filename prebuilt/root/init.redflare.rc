@@ -18,7 +18,7 @@ on property:sys.boot_completed=1
     write /dev/stune/top-app/schedtune.boost 0
 
 # Dynamic Stune Boost during sched_boost
-    write /dev/stune/top-app/schedtune.sched_boost 20
+    write /dev/stune/top-app/schedtune.sched_boost 25
 
 on property:sys.post_boot.parsed=1
     setprop vendor.post_boot.parsed 1
