@@ -1,7 +1,7 @@
 import /init.redflare.rc
 
 on init
-    mount none /system/lib/modules/wlan.ko /vendor/lib/modules/qca_cld3_wlan.ko bind
+#   mount none /system/lib/modules/wlan.ko /vendor/lib/modules/qca_cld3_wlan.ko bind
     mount none /dev/null /vendor/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk bind
     mount none /dev/null /vendor/overlay/BluetoothResCommon.apk bind
     mount none /dev/null /vendor/overlay/SystemUIResCommon.apk bind
@@ -20,7 +20,7 @@ on init
 
 on boot
     # default country code
-    setprop ro.boot.wificountrycode 00
+#    setprop ro.boot.wificountrycode 00
 
     # Touchscreen
     chown system system /proc/touchpanel/single_tap_enable
@@ -151,10 +151,10 @@ on boot
     chmod 0660 /sys/class/power_supply/usb/otg_switch
 
     mkdir /persist/battery 0770 system system
-    mkdir /data/vendor/omni 0770 cameraserver audio
-    write /data/vendor/omni/client_package_name 0
-    chown cameraserver audio /data/vendor/omni/client_package_name
-    chmod 0644 /data/vendor/omni/client_package_name
+    mkdir /data/misc/omni 0770 cameraserver audio
+    write /data/misc/omni/client_package_name 0
+    chown cameraserver audio /data/misc/omni/client_package_name
+    chmod 0644 /data/misc/omni/client_package_name
 
 on post-fs
     # Vibrator
