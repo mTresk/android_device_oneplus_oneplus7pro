@@ -224,3 +224,4 @@ else
   $(warning **********)
 endif
 
+$(call inherit-product, build/make/target/product/gsi_keys.mk)
