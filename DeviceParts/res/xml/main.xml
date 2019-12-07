@@ -84,19 +84,32 @@
     <PreferenceCategory
         android:key="audio"
         android:title="@string/audio_title">
+        <SwitchPreference
+            android:key="enable_dolby_atmos"
+            android:summary="@string/enable_dolby_summary"
+            android:title="@string/enable_dolby_title"
+            android:defaultValue="true"
+            android:persistent="true" />
         <Preference
-            android:key="audio_dolby_atmos"
-            android:title="@string/dolby_title">
+            android:key="dolby_atmos"
+            android:title="@string/dolby_title"
+            android:summary="@string/dolby_summary"
+            android:dependency="enable_dolby_atmos"
+            android:persistent="false" >
             <intent
                  android:targetPackage="com.oneplus.sound.tuner"
                  android:targetClass="com.oneplus.sound.tuner.panoramic.DolbyPanoramicSoundActivity" />
         </Preference>
+        <Preference
+            android:icon="@drawable/ic_info_outline_24dp"
+            android:persistent="false"
+            android:summary="@string/enable_dolby_info" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="refresh"
         android:title="@string/refresh_title">
-        <org.omnirom.omnilib.preference.SystemSettingSwitchPreference
+        <SwitchPreference
             android:key="auto_refresh_rate"
             android:summary="@string/auto_refresh_rate_summary"
             android:title="@string/auto_refresh_rate_title"
@@ -110,6 +123,11 @@
             android:icon="@drawable/ic_info_outline_24dp"
             android:persistent="false"
             android:summary="@string/refresh_rate_warning" />
+        <SwitchPreference
+            android:key="fps_info"
+            android:title="@string/fps_info_title"
+            android:summary="@string/fps_info_summary"
+            android:persistent="true" />
     </PreferenceCategory>
 
     <PreferenceCategory

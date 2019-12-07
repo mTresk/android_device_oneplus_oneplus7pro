@@ -18,6 +18,10 @@
 package org.omnirom.device;
 
 import android.os.Bundle;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceManager;
 import androidx.preference.ListPreference;
@@ -49,6 +53,8 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_OTG_SWITCH = "otg_switch";
     public static final String KEY_REFRESH_RATE = "refresh_rate";
     public static final String KEY_AUTO_REFRESH_RATE = "auto_refresh_rate";
+    public static final String KEY_FPS_INFO = "fps_info";
+    private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
 
     public static final String SLIDER_DEFAULT_VALUE = "2,1,0";
 
@@ -63,10 +69,12 @@ public class DeviceSettings extends PreferenceFragment implements
     private static TwoStatePreference mOtgSwitch;
     private static TwoStatePreference mRefreshRate;
     private static SwitchPreference mAutoRefreshRate;
-
+    private static SwitchPreference mFpsInfo;
+    private SwitchPreference mEnableDolbyAtmos;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         setPreferencesFromResource(R.xml.main, rootKey);
 
         mVibratorStrength = (VibratorStrengthPreference) findPreference(KEY_VIBSTRENGTH);
@@ -119,6 +127,12 @@ public class DeviceSettings extends PreferenceFragment implements
         mRefreshRate.setChecked(RefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
         mRefreshRate.setOnPreferenceChangeListener(new RefreshRateSwitch(getContext()));
 
+        mFpsInfo = (SwitchPreference) findPreference(KEY_FPS_INFO);
+        mFpsInfo.setChecked(prefs.getBoolean(KEY_FPS_INFO, false));
+        mFpsInfo.setOnPreferenceChangeListener(this);
+
+        mEnableDolbyAtmos = (SwitchPreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
+        mEnableDolbyAtmos.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -149,6 +163,30 @@ public class DeviceSettings extends PreferenceFragment implements
             setSliderAction(2, sliderMode);
             int valueIndex = mSliderModeBottom.findIndexOfValue(value);
             mSliderModeBottom.setSummary(mSliderModeBottom.getEntries()[valueIndex]);
+        } else if (preference == mFpsInfo) {
+            boolean enabled = (Boolean) newValue;
+            Intent fpsinfo = new Intent(this.getContext(), org.omnirom.device.FPSInfoService.class);
+            if (enabled) {
+                this.getContext().startService(fpsinfo);
+            } else {
+                this.getContext().stopService(fpsinfo);
+            }
+        } else if (preference == mEnableDolbyAtmos) {
+            boolean enabled = (Boolean) newValue;
+            Intent daxService = new Intent();
+            ComponentName name = new ComponentName("com.dolby.daxservice", "com.dolby.daxservice.DaxService");
+            daxService.setComponent(name);
+            if (enabled) {
+                // enable service component and start service
+                this.getContext().getPackageManager().setComponentEnabledSetting(name,
+                        PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, 0);
+                this.getContext().startService(daxService);
+            } else {
+                // disable service component and stop service
+                this.getContext().stopService(daxService);
+                this.getContext().getPackageManager().setComponentEnabledSetting(name,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 0);
+            }
         }
         return true;
     }
