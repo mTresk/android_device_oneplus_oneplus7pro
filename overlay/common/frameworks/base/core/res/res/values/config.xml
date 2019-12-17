@@ -848,5 +848,7 @@
 
     <!-- Disable AOD by default -->
     <bool name="config_dozeAlwaysOnEnabled">false</bool>
-
+    
+    <!-- Enable system navigation keys. -->
+    <bool name="config_supportSystemNavigationKeys">false</bool>
 </resources>
