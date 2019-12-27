@@ -69,12 +69,6 @@ public class Startup extends BroadcastReceiver {
             enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_OTG_SWITCH, false);
             Settings.System.putInt(context.getContentResolver(), UsbOtgSwitch.SETTINGS_KEY, enabled ? 1 : 0);
 
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_REFRESH_RATE, false);
-            Settings.System.putFloat(context.getContentResolver(), Settings.System.PEAK_REFRESH_RATE, enabled ? 90f : 60f);
-
-            enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_AUTO_REFRESH_RATE, false);
-            Settings.System.putInt(context.getContentResolver(), AutoRefreshRateSwitch.SETTINGS_KEY, enabled ? 1 : 0);
-
             String vibrStrength = sharedPrefs.getString(DeviceSettings.KEY_VIBSTRENGTH, VibratorStrengthPreference.DEFAULT_VALUE); 
             Settings.System.putString(context.getContentResolver(), VibratorStrengthPreference.SETTINGS_KEY, vibrStrength);
 
@@ -94,6 +88,10 @@ public class Startup extends BroadcastReceiver {
         if (enabled) {
             context.startService(new Intent(context, FPSInfoService.class));
         }
+        // cleanup old 90hz fps
+        Settings.System.putFloat(context.getContentResolver(), Settings.System.PEAK_REFRESH_RATE,
+                (float) context.getResources().getInteger(com.android.internal.R.integer.config_defaultPeakRefreshRate));
+        Settings.System.putFloat(context.getContentResolver(), Settings.System.MIN_REFRESH_RATE, 0f);
     }
 
     public static void restoreAfterUserSwitch(Context context) {
