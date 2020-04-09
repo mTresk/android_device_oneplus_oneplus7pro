@@ -30,5 +30,8 @@
 
     <color name="config_fodColor">#00C800</color>
 
+    <!-- Enable face auth only when swiping security view -->
+    <bool name="config_faceAuthOnlyOnSecurityView">true</bool>
+
 </resources>
 
