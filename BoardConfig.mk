@@ -221,6 +221,7 @@ WIFI_DRIVER_BUILT                := qca_cld3
 WIFI_DRIVER_DEFAULT              := qca_cld3
 WIFI_HIDL_FEATURE_AWARE          := true
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
+TARGET_INCLUDE_WIFI_EXT          := true
 
 CONFIG_ACS := true
 CONFIG_IEEE80211AC := true
