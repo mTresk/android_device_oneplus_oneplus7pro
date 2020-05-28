@@ -211,7 +211,7 @@ Return<int32_t> FingerprintInscreen::getDimAmount(int32_t suggest) {
     LOG(INFO) << "dimAmount1 = " << suggest;
     if ((suggest > 0) && (suggest < 255)) {
         if (suggest < 127) {
-            dimAmount = 255 - suggest - 28;
+            dimAmount = 255 - suggest - 42;
         } else {
             dimAmount = get(DIM_AMOUNT_PATH, suggest);
             dimAmount = 255 - dimAmount;
