@@ -51,7 +51,7 @@ endif
 
 TARGET_NO_BOOTLOADER := true
 ifeq ($(TARGET_DEVICE),oneplus7pro)
-TARGET_OTA_ASSERT_DEVICE := OnePlus7Pro
+TARGET_OTA_ASSERT_DEVICE := oneplus7pro
 endif
 TARGET_KERNEL_VERSION := 4.14
 TARGET_KERNEL_CLANG_COMPILE := true
@@ -279,8 +279,10 @@ TARGET_USES_QCOM_BSP := false
 #gapps
 TARGET_INCLUDE_STOCK_ARCORE := true
 
+
+# FOD
+TARGET_SURFACEFLINGER_FOD_LIB := //$(BOARD_PATH):libfod_extension.oneplus_msmnile
+
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += $(BOARD_PATH)/vendor_framework_compatibility_matrix.xml
 # HIDL
-ifneq ($(TARGET_DEVICE),oneplus7t)
 DEVICE_FRAMEWORK_MANIFEST_FILE += $(BOARD_PATH)/framework_manifest.xml
-endif
