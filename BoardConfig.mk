@@ -93,7 +93,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image-dtb
 TARGET_KERNEL_SOURCE := kernel/oneplus/sm8150
-TARGET_KERNEL_CONFIG := redflare_defconfig
+TARGET_KERNEL_CONFIG := vendor/neutrino_defconfig
 BOARD_KERNEL_SEPARATED_DTBO := true
 
 # partitions
