@@ -17,8 +17,7 @@
 */
 -->
 <resources>
-    <dimen name="keyguard_fod_switch_bottom_margin">115dp</dimen>
-    <!-- op7xxx need about 70dp to be above fod -->
-    <dimen name="keyguard_security_container_bottom_margin">0dp</dimen>
+    <!-- The minimum bottom margin of the keyguard security container -->
+    <dimen name="kg_security_container_min_bottom_margin">625px</dimen>
 </resources>
 
